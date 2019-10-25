@@ -1,7 +1,7 @@
 var apiKey = "dbf364bc39a4580a03a0dd92d999aa37";
 var currentCityToSearch = "Tempe"
-var currentWxQueryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + currentCityToSearch + "&units=imperial&appid=" + apiKey;
-var currentForecastQueryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + currentCityToSearch + "&units=imperial&appid=" + apiKey;
+var currentWxQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + currentCityToSearch + "&units=imperial&appid=" + apiKey;
+var currentForecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + currentCityToSearch + "&units=imperial&appid=" + apiKey;
 var currentUVQueryURL = "";
 var $currentCityDisplay = $("#current-city-display");
 var $currentDateDisplay = $("#current-date-display");
