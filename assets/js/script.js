@@ -25,7 +25,7 @@ function getWx() {
         $currentHumidityDisplay.text(response.main.humidity);
         $currentWindDisplay.text(response.wind.speed);
         $currentUvDisplay.text(response.name);
-        $wxIcon.attr("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
+        $wxIcon.attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
         console.log(response.coord.lat, response.coord.lon);
         getForecast();
         getUvIndex(response.coord.lat, response.coord.lon);
