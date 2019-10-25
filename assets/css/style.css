@@ -7,7 +7,7 @@
 */
 
 body {
-    background-color: #a2aaad;
+    background-color: #7c878e;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 12px;
 }
@@ -37,16 +37,31 @@ body {
     max-width: 960px;
 }
 
+p{
+    margin:10px;
+}
+
 h1 {
     font-size: 32px;
     font-weight: bolder;
     color: #fff;
-    text-shadow: -1px -1px 0 #, 1px -1px 0 #, -1px 1px 0 #, 1px 1px 0 #;
+    text-shadow: -1px -1px 0p#, 1px -1px 0 #, -1px 1px 0 #, 1px 1px 0 #;
+}
+
+h2 {
+    display:inline-block;
+    font-size: 26px;
+    font-weight: bolder;
+    color: #041e42;
 }
 
 h3 {
+    display:inline-block;
     font-size: 16px;
+    font-weight: bolder;
+    line-height: 18px;
     color: #041e42;
+    margin: 0px;
 }
 
 .body-row {
@@ -54,7 +69,7 @@ h3 {
     text-align: center;
     border-radius: 0px 0px 15px 15px;
     max-width: 960px;
-    min-height: 400px;
+    min-height: 300px;
 }
 
 .left-col {
@@ -65,9 +80,25 @@ h3 {
     padding: 15px;
 }
 
-.left-col {
+.right-col {
     text-align: left;
-    padding: 15px;
+    padding: 15px 30px 15px 30px;
+}
+
+.wx-row {
+    border: 1px solid #a2aaad;
+    box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 175px;
+    margin-bottom: 20px;
+}
+
+.forecast-col{
+    background: #002f87;
+    font-size: 10px;
+    line-height: 18px;
+    color: #fff;
+    height: 90px;
+    padding: 5px;
 }
 
 .form-control:focus {

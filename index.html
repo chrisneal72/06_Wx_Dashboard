@@ -29,9 +29,11 @@
                                     <form action="">
                                         <div class="input-group mb-4">
                                             <input type="search" placeholder="What're you searching for?"
-                                            aria-describedby="button-addon6" class="form-control">
+                                                aria-describedby="button-addon6" class="form-control search-box">
                                             <div class="input-group-append">
-                                                <button id="button-addon6" type="submit" class="btn btn-info search-button"><i class="fa fa-search"></i></button>
+                                                <button id="button-addon6" type="submit"
+                                                    class="btn btn-info search-button"><i
+                                                        class="fa fa-search"></i></button>
                                             </div>
                                         </div>
                                     </form>
@@ -40,13 +42,50 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <button id="button-addon6" type="submit" class="my-btn btn-info search-button">Phoenix</button>
-                                <button id="button-addon6" type="submit" class="my-btn btn-info search-button">Phoenix</button>
+                                <button id="button-addon6" type="submit"
+                                    class="my-btn btn-info search-button">Phoenix</button>
+                                <button id="button-addon6" type="submit"
+                                    class="my-btn btn-info search-button">Phoenix</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-8 right-col">
-                        <p>Place holder Text</p>
+                        <div class="row wx-row">
+                            <div class="col">
+                                <h2><span id="current-city-display">City</span></h2> <img id="wx-icon" src=''> <span
+                                    id="current-date-display">Date</span>
+                                <p>
+                                    <h3>Temperature:&nbsp;</h3><span id="current-temp-display">0</span>&#176;F
+                                </p>
+                                <p>
+                                    <h3>Humidity:&nbsp;</h3><span id="current-humidity-display">0</span>%
+                                </p>
+                                <p>
+                                    <h3>Wind Speed:&nbsp;</h3><span id="current-wind-display">0</span>MPH
+                                </p>
+                                <p>
+                                    <h3>UV Index:&nbsp;</h3><span id="current-uv-display">0</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col"><H2>5 Day Forecast:</H2></div>
+                        </div>
+                        <div class="row justify-content-between forcast-row">
+                            <div class="col-2 forecast-col" id="forecast-1">Date<br>
+                                icon<br>
+                                Temp: 0&#176;F<br>
+                                Humidity: 0%
+                            </div>
+                            <div class="col-2 forecast-col id="forecast-1">
+                            </div>
+                            <div class="col-2 forecast-col id="forecast-1>
+                            </div>
+                            <div class="col-2 forecast-col id="forecast-1">
+                            </div>
+                            <div class="col-2 forecast-col id="forecast-1">1
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
