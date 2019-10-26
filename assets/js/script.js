@@ -11,33 +11,52 @@ var storedCityList = JSON.parse(localStorage.getItem("city-list"));
 if (!storedCityList) { storedCityList = [] }
 var $wxIcon = $("#wx-icon");
 var $searchSaveDiv = $("#search-saves");
+var fromLandingPage = 1;
 
-function getWx(searchLocation) {
-    //build buttons
-    //<button id="button-addon6" type="submit" class="my-btn btn-info search-button">Phoenix</button>
-    $searchSaveDiv.empty();
-    for (i = 0; i < storedCityList.length; i++) {
-        $searchSaveDiv.append(
-            $("<button>")
-                .attr("class", "my-btn btn-info search-button")
-                .attr("value", storedCityList[i])
-                .text(storedCityList[i])
-        );
-    }
-    console.log("Inside getWx " + currentWxQueryURL)
+function getWx() {
+
     $.ajax({
         url: currentWxQueryURL,
         method: "GET"
     }).then(function (response) {
-        var thisDate = response.dt;// - response.timezone;
+        //UPDATING THE CURRENT WEATHER FOR THE CURRENT CITY
         $currentCityDisplay.text(response.name);
-        $currentDateDisplay.text(moment.unix(thisDate).format("M/D/YYYY"));
+        $currentDateDisplay.text(moment.unix(response.dt).format("M/D/YYYY"));
         $currentTempDisplay.text(response.main.temp.toFixed(1));
         $currentHumidityDisplay.text(response.main.humidity);
         $currentWindDisplay.text(response.wind.speed);
         $wxIcon.attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
         searchLocation = response.name;
+        //ADJUSTING OUR SAVE LIST IF WE DO A TEXT SEARCH OR CLICK A SAVED CITY
+        if (fromLandingPage == 0) {
+            //IF THE CURRENT CITY BEING PROCESSED IN IN OUT LIST WE REMOVE IT
+            if ($.inArray(searchLocation, storedCityList) >= 0) {
+                storedCityList = jQuery.grep(storedCityList, function (value) {
+                    return value != searchLocation;
+                });
+            }
+            //WE ADD THE CURENT CITY TO THE TOP OF THE LIST
+            storedCityList.unshift(searchLocation);
+            //IF OUR LIST HAS MORE THAN 5 CITIES, DROP THE LAST ONE
+            while (storedCityList.length > 5) { storedCityList.pop() }
+            //STORE IN LOCAL STORAGE
+            localStorage.setItem("city-list", JSON.stringify(storedCityList))
+        }
+        //BUILD THE BUTTON LIST
+        $searchSaveDiv.empty();
+        for (i = 0; i < storedCityList.length; i++) {
+            $searchSaveDiv.append(
+                $("<button>")
+                    .attr("class", "my-btn btn-info search-button")
+                    .attr("value", storedCityList[i])
+                    .text(storedCityList[i])
+            );
+        }
+        //PASSING THE NAME TO THE FORCAST AS WE ARE NOT SURE IF THE SEARCH WAS A CITY NAME OR A GEOLOCATION
+        //GETTING IT FROM THE RESULT ENSURES THEY MATCH
         getForecast(searchLocation);
+        //UV INDEX CALL ONLY ACCEPTS LAT AND LON SO GETTING THAT FROM OUR SEARCH RESULT
+        //GETTING IT FROM THE RESULT ENSURES THEY MATCH
         getUvIndex(response.coord.lat, response.coord.lon);
     });
 }
@@ -48,9 +67,13 @@ function getForecast(searchLocation) {
         url: currentForecastQueryURL,
         method: "GET"
     }).then(function (response) {
+        //WE GET 40 RESULTS IN THE FORECAST I ONLY WANT 5.
+        //USING THIS VAR TO TRAK THEM
         var boxCount = 1;
+        //LOOPING THROUGH THE RESULTS TO FIND THE 5 I WANT
         for (i = 0; i < response.list.length; i++) {
             var hourCheck = moment(response.list[i].dt_txt).format("HH");
+            //ONLY PROCESSING THE RESUL IF IT IS FOR 12
             if (hourCheck == 12) {
                 $("#forecast-date-" + boxCount).text(moment(response.list[i].dt_txt).format("M/D/YYYY"));
                 $("#wx-icon-" + boxCount).attr("src", "https://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png")
@@ -69,6 +92,7 @@ function getUvIndex(lat, lon) {
         method: "GET"
     }).then(function (response) {
         $currentUvDisplay.text(response.value);
+        //THIS SWITCH IS CHANGING THE UV INDEX COLOR TO THE APPROPRIATE LEVEL
         switch (true) {
             case (response.value < 3):
                 $currentUvDisplay.addClass("uv-12");
@@ -109,17 +133,12 @@ function getUvIndex(lat, lon) {
 }
 
 function prepSearch(searchCity) {
+    //BUILDING THE SEARCH STRING FROM THE SAVED CITY BUTTON PRESS OR TEXT SEARCH
     currentWxQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchCity + "&units=imperial&appid=" + apiKey;
     $("#seach-input").val("");
-    if ($.inArray(searchCity, storedCityList) >= 0) {
-        storedCityList = jQuery.grep(storedCityList, function (value) {
-            return value != searchCity;
-        });
-    }
-    storedCityList.unshift(searchCity);
-    while (storedCityList.length > 5) { storedCityList.pop() }
-    localStorage.setItem("city-list", JSON.stringify(storedCityList))
-    getWx(searchCity);
+    //IF THE LINK IS COMING FROM A REFRESH, LETTING THE CODE KNOW THIS IS NOT FROM THE LANDING PAGE
+    fromLandingPage = 0;
+    getWx();
 }
 
 $("#wx-search-form").submit(function (event) {
@@ -132,7 +151,7 @@ $("#wx-search-form").submit(function (event) {
         return txtVal.toUpperCase();
     });
 
-    var currentWxQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchCity + "&units=imperial&appid=" + apiKey;
+    currentWxQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchCity + "&units=imperial&appid=" + apiKey;
     prepSearch(searchCity)
 });
 
@@ -143,18 +162,24 @@ $searchSaveDiv.on("click", function (evt) {
 });
 
 $(document).ready(function () {
-    var city = "Honolulu"
+    //THIS IS WHERE THE CODE REALL STARTS, AFTER THE PAGE LOADS
     if ("geolocation" in navigator) {
         /* geolocation is available */
+        //THE SEARCH STRIN IS DIFFERENT FOR LAT LON VS A CITY SEARCH
+        //SETTING IT IN A GLOBAL VAR RATHER THAN TRYING TO PASS IT AND TRACE WHERE IT IS
         navigator.geolocation.getCurrentPosition(function (position) {
-            console.log(position)
             var lat = position.coords.latitude;
             var lon = position.coords.longitude;
             currentWxQueryURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + apiKey;
-            getWx(city);
+            //IF THE LINK IS COMING FROM A REFRESH, I DON'T WANT TO STORE IT IN SAVED SO USING THIS FLAG
+            fromLandingPage = 1;
+            getWx();
         })
     } else {
-        currentWxQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=Honolulu&units=imperial&appid=" + apiKey;;
-        getWx(city);
+        //IF WE CAN NOT GET GEOLOCATION THEN WE DEFAULT TO HONOLULU
+        currentWxQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=Honolulu&units=imperial&appid=" + apiKey;
+        //IF THE LINK IS COMING FROM A REFRESH, I DON'T WANT TO STORE IT IN SAVED SO USING THIS FLAG
+        fromLandingPage = 1;
+        getWx();
     }
 })
