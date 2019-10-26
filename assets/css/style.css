@@ -69,7 +69,7 @@ h3 {
     text-align: center;
     border-radius: 0px 0px 15px 15px;
     max-width: 960px;
-    min-height: 300px;
+    /* min-height: 300px; */
 }
 
 .left-col {
@@ -88,7 +88,7 @@ h3 {
 .wx-row {
     border: 1px solid #a2aaad;
     box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    height: 175px;
+    /* height: 175px; */
     margin-bottom: 20px;
 }
 
@@ -97,7 +97,8 @@ h3 {
     font-size: 10px;
     line-height: 18px;
     color: #fff;
-    height: 90px;
+    /* height: 90px; */
+    margin: 5px;
     padding: 5px;
     box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -158,16 +159,48 @@ h3 {
 .my-btn:hover {
     background-color: #002f87;
     color: #fff;
-    box-shadow: 0px 0px 20px 1px #4aaaa5;
+    box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .my-btn:focus {
     background-color: #002f87;
     color: #fff;
-    box-shadow: 0px 0px 20px 1px #4aaaa5;
+    box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .my-btn:active {
     background-color: #002f87;
     color: #fff;
+}
+
+UV Index colors
+.uv-12{
+    background-color: #85c98b;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+.uv-35{
+    background-color: #ffde00;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+.uv-67{
+    background-color: #f99d1b;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+.uv-810{
+    background-color: #ed1c24;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+.uv-11{
+    background-color: #da3884;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
