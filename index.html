@@ -25,10 +25,11 @@
                     <div class="col-4 left-col">
                         <div class="row">
                             <div class="col">
+                                <form id="wx-search-form" method="POST">
                                 <!-- https://bootstrapious.com/p/bootstrap-search-bar -->
                                 <div class="input-group mb-4">
                                     <input type="search" placeholder="What're you searching for?"
-                                        aria-describedby="button-addon6" class="form-control search-box">
+                                        aria-describedby="button-addon6" id="seach-input" class="form-control search-box">
                                     <div class="input-group-append">
                                         <button id="button-addon6" type="submit" class="btn btn-info search-button"><i
                                                 class="fa fa-search"></i></button>
@@ -38,7 +39,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col" id="search-saves">
                                 <button id="button-addon6" type="submit"
                                     class="my-btn btn-info search-button">Phoenix</button>
                                 <button id="button-addon6" type="submit"
