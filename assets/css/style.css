@@ -45,7 +45,7 @@ h1 {
     font-size: 32px;
     font-weight: bolder;
     color: #fff;
-    text-shadow: -1px -1px 0p#, 1px -1px 0 #, -1px 1px 0 #, 1px 1px 0 #;
+    text-shadow: -1px -1px 0 #041e42, 1px -1px 0 #041e42,-1px 1px 0 #041e42,1px 1px 0 #041e42;
 }
 
 h2 {

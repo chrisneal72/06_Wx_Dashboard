@@ -19,7 +19,7 @@ function getWx() {
     }).then(function (response) {
         var thisDate = response.dt;// - response.timezone;
         $currentCityDisplay.text(response.name);
-        $currentDateDisplay.text(moment.unix(thisDate).format("DD/MM/YYYY"));
+        $currentDateDisplay.text(moment.unix(thisDate).format("M/D/YYYY"));
         $currentTempDisplay.text(response.main.temp);
         $currentHumidityDisplay.text(response.main.humidity);
         $currentWindDisplay.text(response.wind.speed);
@@ -36,17 +36,17 @@ function getForecast() {
         method: "GET"
     }).then(function (response) {
         console.log(response);
-        // var thisDate = new Date(response.dt * 1000);
-        // $currentCityDisplay.text(response.name);
-        // $currentDateDisplay.text(thisDate.getDate() + "/" + (thisDate.getMonth() + 1) + "/" + thisDate.getFullYear());
-        // $currentTempDisplay.text(response.main.temp);
-        // $currentHumidityDisplay.text(response.main.humidity);
-        // $currentWindDisplay.text(response.wind.speed);
-        // $currentUvDisplay.text(response.name);
-        // $wxIcon.attr("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
-        // console.log(response.coord.lat, response.coord.lon);
-        // getForecast(response.coord.lat, response.coord.lon);
-        // getUvIndex(response.coord.lat, response.coord.lon);
+        var boxCount = 1;
+        for (i=0; i < response.list.length; i++){
+            var hourCheck = moment(response.list[i].dt_txt).format("HH");
+            if (hourCheck == 12){
+                $("#forecast-date-" + boxCount).text(moment(response.list[i].dt_txt).format("M/D/YYYY"));
+                $("#wx-icon-" + boxCount).attr("src", "https://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png")
+                $("#forecast-temp-" + boxCount).text(response.list[i].main.temp);
+                $("#forecast-humidity-" + boxCount).text(response.list[i].main.humidity);
+                boxCount++;
+            }
+        }
     });
 }
 
