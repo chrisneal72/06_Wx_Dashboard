@@ -67,6 +67,7 @@ function getForecast(searchLocation) {
         url: currentForecastQueryURL,
         method: "GET"
     }).then(function (response) {
+        console.log(response)
         //WE GET 40 RESULTS IN THE FORECAST I ONLY WANT 5.
         //USING THIS VAR TO TRAK THEM
         var boxCount = 1;
@@ -74,7 +75,7 @@ function getForecast(searchLocation) {
         for (i = 0; i < response.list.length; i++) {
             var hourCheck = moment(response.list[i].dt_txt).format("HH");
             //ONLY PROCESSING THE RESUL IF IT IS FOR 12
-            if (hourCheck == 12) {
+            if (hourCheck == 18) {
                 $("#forecast-date-" + boxCount).text(moment(response.list[i].dt_txt).format("M/D/YYYY"));
                 $("#wx-icon-" + boxCount).attr("src", "https://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png")
                 $("#forecast-temp-" + boxCount).text(response.list[i].main.temp.toFixed(1));

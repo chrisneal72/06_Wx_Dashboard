@@ -25,10 +25,14 @@ Main Screen as seen from my Phone
 
 ![Image](assets/images/phone.jpg)
 ​
+
+
 Main Screen as seen from my iPad
 
 ![Image](assets/images/ipad.jpg)
 ​
+
+
 Main page in a browser
 
 ![Image](assets/images/desktop.jpg)
