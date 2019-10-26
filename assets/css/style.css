@@ -175,33 +175,23 @@ h3 {
 }
 
 /* UV Index colors */
-.uv-12{
-    background-color: #85c98b;
+.uv {
     padding: 5px;
     border-radius: 5px;
     box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+.uv-12{
+    background-color: #85c98b;
 }
 .uv-35{
     background-color: #ffde00;
-    padding: 5px;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
 .uv-67{
     background-color: #f99d1b;
-    padding: 5px;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
 .uv-810{
     background-color: #ed1c24;
-    padding: 5px;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
 .uv-11{
     background-color: #da3884;
-    padding: 5px;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
