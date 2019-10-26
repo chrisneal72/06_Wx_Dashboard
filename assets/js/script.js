@@ -72,17 +72,37 @@ function getUvIndex(lat, lon) {
         switch (true) {
             case (response.value < 3):
                 $currentUvDisplay.addClass("uv-12");
+                $currentUvDisplay.removeClass("uv-35");
+                $currentUvDisplay.removeClass("uv-67");
+                $currentUvDisplay.removeClass("uv-810");
+                $currentUvDisplay.removeClass("uv-11");
                 break;
-            case response.value < 6:
+            case (response.value < 6):
+                $currentUvDisplay.removeClass("uv-12");
                 $currentUvDisplay.addClass("uv-35");
+                $currentUvDisplay.removeClass("uv-67");
+                $currentUvDisplay.removeClass("uv-810");
+                $currentUvDisplay.removeClass("uv-11");
                 break;
-            case response.value < 8:
+            case (response.value < 8):
+                $currentUvDisplay.removeClass("uv-12");
+                $currentUvDisplay.removeClass("uv-35");
                 $currentUvDisplay.addClass("uv-67");
+                $currentUvDisplay.removeClass("uv-810");
+                $currentUvDisplay.removeClass("uv-11");
                 break;
-            case response.value < 11:
+            case (response.value < 11):
+                $currentUvDisplay.removeClass("uv-12");
+                $currentUvDisplay.removeClass("uv-35");
+                $currentUvDisplay.removeClass("uv-67");
                 $currentUvDisplay.addClass("uv-810");
+                $currentUvDisplay.removeClass("uv-11");
                 break;
             default:
+                $currentUvDisplay.removeClass("uv-12");
+                $currentUvDisplay.removeClass("uv-35");
+                $currentUvDisplay.removeClass("uv-67");
+                $currentUvDisplay.removeClass("uv-810");
                 $currentUvDisplay.addClass("uv-11");
         }
     });
@@ -130,9 +150,7 @@ $(document).ready(function () {
             console.log(position)
             var lat = position.coords.latitude;
             var lon = position.coords.longitude;
-            console.log(lat + " : " + lon)
             currentWxQueryURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + apiKey;
-            console.log("Inside geolocation " + currentWxQueryURL)
             getWx(city);
         })
     } else {
