@@ -1,4 +1,5 @@
 var apiKey = "dbf364bc39a4580a03a0dd92d999aa37";
+var currentWxQueryURL = "";
 var currentUVQueryURL = "";
 var $currentCityDisplay = $("#current-city-display");
 var $currentDateDisplay = $("#current-date-display");
@@ -12,8 +13,6 @@ var $wxIcon = $("#wx-icon");
 var $searchSaveDiv = $("#search-saves");
 
 function getWx(searchLocation) {
-    console.log(searchLocation)
-
     //build buttons
     //<button id="button-addon6" type="submit" class="my-btn btn-info search-button">Phoenix</button>
     $searchSaveDiv.empty();
@@ -25,8 +24,7 @@ function getWx(searchLocation) {
                 .text(storedCityList[i])
         );
     }
-
-    currentWxQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchLocation + "&units=imperial&appid=" + apiKey;
+    console.log("Inside getWx " + currentWxQueryURL)
     $.ajax({
         url: currentWxQueryURL,
         method: "GET"
@@ -38,6 +36,7 @@ function getWx(searchLocation) {
         $currentHumidityDisplay.text(response.main.humidity);
         $currentWindDisplay.text(response.wind.speed);
         $wxIcon.attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
+        searchLocation = response.name;
         getForecast(searchLocation);
         getUvIndex(response.coord.lat, response.coord.lon);
     });
@@ -89,7 +88,8 @@ function getUvIndex(lat, lon) {
     });
 }
 
-function prepSearch(searchCity){
+function prepSearch(searchCity) {
+    currentWxQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchCity + "&units=imperial&appid=" + apiKey;
     $("#seach-input").val("");
     if ($.inArray(searchCity, storedCityList) >= 0) {
         storedCityList = jQuery.grep(storedCityList, function (value) {
@@ -99,7 +99,6 @@ function prepSearch(searchCity){
     storedCityList.unshift(searchCity);
     while (storedCityList.length > 5) { storedCityList.pop() }
     localStorage.setItem("city-list", JSON.stringify(storedCityList))
-    console.log(storedCityList)
     getWx(searchCity);
 }
 
@@ -112,6 +111,8 @@ $("#wx-search-form").submit(function (event) {
     searchCity = searchCity.toLowerCase().replace(/\b[a-z]/g, function (txtVal) {
         return txtVal.toUpperCase();
     });
+
+    var currentWxQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchCity + "&units=imperial&appid=" + apiKey;
     prepSearch(searchCity)
 });
 
@@ -122,5 +123,20 @@ $searchSaveDiv.on("click", function (evt) {
 });
 
 $(document).ready(function () {
-    getWx("Honolulu");
+    var city = "Honolulu"
+    if ("geolocation" in navigator) {
+        /* geolocation is available */
+        navigator.geolocation.getCurrentPosition(function (position) {
+            console.log(position)
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            console.log(lat + " : " + lon)
+            currentWxQueryURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + apiKey;
+            console.log("Inside geolocation " + currentWxQueryURL)
+            getWx(city);
+        })
+    } else {
+        currentWxQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=Honolulu&units=imperial&appid=" + apiKey;;
+        getWx(city);
+    }
 })
