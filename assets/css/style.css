@@ -197,11 +197,11 @@ h3 {
 }
 
 @media screen and (max-width: 767px) {
-    /* .hide-on-small-screen {
+    .hide-on-small-screen {
         display: none;
-    } */
+    }
     
-    #search-saves {
+    /* #search-saves {
         display: none;
     }
     
@@ -211,5 +211,5 @@ h3 {
         border: none;
         border-radius: 0;
         padding: 15px;
-    }  
+    }   */
 }
