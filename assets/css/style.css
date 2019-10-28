@@ -5,11 +5,6 @@
 #a2aaad Gray
 #7c878e Dark Gray
 */
-@media screen and (max-width: 700px) {
-    .hide-on-small-screen {
-        display: none;
-    }
-}
 
 body {
     background-color: #7c878e;
@@ -199,4 +194,22 @@ h3 {
 }
 .uv-11{
     background-color: #da3884;
+}
+
+@media screen and (max-width: 767px) {
+    /* .hide-on-small-screen {
+        display: none;
+    } */
+    
+    #search-saves {
+        display: none;
+    }
+    
+    .left-col {
+        background: #a2aaad;
+        text-align: left;
+        border: none;
+        border-radius: 0;
+        padding: 15px;
+    }  
 }
