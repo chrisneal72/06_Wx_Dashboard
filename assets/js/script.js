@@ -3,6 +3,7 @@ var currentWxQueryURL = "";
 var currentUVQueryURL = "";
 var $currentCityDisplay = $("#current-city-display");
 var $currentDateDisplay = $("#current-date-display");
+var $currentLocalTimeDisplay = $("#current-local-time-display");
 var $currentTempDisplay = $("#current-temp-display");
 var $currentHumidityDisplay = $("#current-humidity-display");
 var $currentWindDisplay = $("#current-wind-display");
@@ -22,11 +23,13 @@ function getWx() {
         //UPDATING THE CURRENT WEATHER FOR THE CURRENT CITY
         $currentCityDisplay.text(response.name);
         $currentDateDisplay.text(moment.unix(response.dt).format("M/D/YYYY"));
+        $currentLocalTimeDisplay.text(moment.unix(response.dt + response.timezone).utc().format("h:ma"));
         $currentTempDisplay.text(response.main.temp.toFixed(1));
         $currentHumidityDisplay.text(response.main.humidity);
         $currentWindDisplay.text(response.wind.speed);
         $wxIcon.attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
         searchLocation = response.name;
+        
         //ADJUSTING OUR SAVE LIST IF WE DO A TEXT SEARCH OR CLICK A SAVED CITY
         if (fromLandingPage == 0) {
             //IF THE CURRENT CITY BEING PROCESSED IN IN OUT LIST WE REMOVE IT
@@ -71,11 +74,37 @@ function getForecast(searchLocation) {
         //WE GET 40 RESULTS IN THE FORECAST I ONLY WANT 5.
         //USING THIS VAR TO TRAK THEM
         var boxCount = 1;
+        var timeOffset = 12;
+        var timeZone = response.city.timezone / 60 / 60
+        
+        //MAKE TIME OFFSET FOR THE FORECAST BE FOR MID DAY AT THE CURRENT SEARCHED LOCATION
+        switch (true) {
+            case timeZone <= 0 && timeZone > -3 : timeOffset = 12;
+            break;
+            case timeZone <= -3 && timeZone > -6 : timeOffset = 15;
+            break;
+            case (timeZone <= -6 && timeZone > -9) : timeOffset = 18;
+            break;
+            case timeZone <= -9 && timeZone > -12 : timeOffset = 21;
+            break;
+            case timeZone >= 0 && timeZone > 3 : timeOffset = 00;
+            break;
+            case timeZone >= 3 && timeZone > 6 : timeOffset = 03;
+            break;
+            case timeZone >= 6 && timeZone > 9 : timeOffset = 06;
+            break;
+            case timeZone >= 9 && timeZone > 12 : timeOffset = 09;
+            break;
+        }
+        console.log(timeOffset);
+
         //LOOPING THROUGH THE RESULTS TO FIND THE 5 I WANT
         for (i = 0; i < response.list.length; i++) {
+            //READING WHICH 3 HOUR FORCAST IS BEING PROCESSED
             var hourCheck = moment(response.list[i].dt_txt).format("HH");
-            //ONLY PROCESSING THE RESUL IF IT IS FOR 12
-            if (hourCheck == 18) {
+
+            //ONLY PROCESSING THE RESUL IF IT IS FOR MID DAY BASED ON LOGIC ABOVE
+            if (hourCheck == timeOffset) {
                 $("#forecast-date-" + boxCount).text(moment(response.list[i].dt_txt).format("M/D/YYYY"));
                 $("#wx-icon-" + boxCount).attr("src", "https://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png")
                 $("#forecast-temp-" + boxCount).text(response.list[i].main.temp.toFixed(1));
