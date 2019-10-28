@@ -5,6 +5,11 @@
 #a2aaad Gray
 #7c878e Dark Gray
 */
+@media screen and (max-width: 700px) {
+    .hide-on-small-screen {
+        display: none;
+    }
+}
 
 body {
     background-color: #7c878e;
