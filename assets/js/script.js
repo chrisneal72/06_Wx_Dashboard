@@ -23,7 +23,7 @@ function getWx() {
         //UPDATING THE CURRENT WEATHER FOR THE CURRENT CITY
         $currentCityDisplay.text(response.name);
         $currentDateDisplay.text(moment.unix(response.dt).format("M/D/YYYY"));
-        $currentLocalTimeDisplay.text(moment.unix(response.dt + response.timezone).utc().format("h:ma"));
+        $currentLocalTimeDisplay.text(moment.unix(response.dt + response.timezone).utc().format("h:mm a"));
         $currentTempDisplay.text(response.main.temp.toFixed(1));
         $currentHumidityDisplay.text(response.main.humidity);
         $currentWindDisplay.text(response.wind.speed);
